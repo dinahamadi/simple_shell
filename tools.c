@@ -3,6 +3,7 @@
  * divide - divide the line into multiple elements
  * @line: the input line to be divided
  * @argc: number of arguments
+ * @exit_status: the exit value
  * Return: an array of elements
  */
 char **divide(char *line, int *argc, size_t *exit_status)
