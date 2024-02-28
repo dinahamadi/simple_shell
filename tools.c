@@ -13,13 +13,19 @@ char **divide(char *line, int *argc)
 	result = strtok(line, " \n\t");
 	while (result != NULL)
 	{
-		element = realloc(element, sizeof(char *) * (compt + 1));
+		element = realloc(element, sizeof(char *) * (compt + 2));
 		if (element == NULL)
 			return (NULL);
 		element[compt] = strdup(result);
+		if (element[compt] == NULL)
+		{
+			free(element);
+			return (NULL);
+		}
 		compt++;
 		result = strtok(NULL, " \n\t");
 	}
+	element[compt] = NULL;
 	*argc = compt;
 	return (element);
 }
@@ -32,7 +38,7 @@ char **divide(char *line, int *argc)
  */
 int execute(char **argv, int compt)
 {
-	int status, exit_status;
+	int status, exit_status = 0;
 	pid_t sub_p;
 	char *command_path = NULL, buffer[12];
 
@@ -51,19 +57,23 @@ int execute(char **argv, int compt)
 	{
 		sub_p = fork();
 		if (sub_p < 0)
+		{
+			free(command_path);
 			return (-1);
+		}
 		else if (sub_p == 0)
 		{
 			if (execve(command_path, argv, environ) == -1)
-				return (-1);
+			{
+				free(command_path);
+				exit(-1);
+			}
 		}
 		else
 		{
 			wait(&status);
 			if (WIFEXITED(status))
-			{
 				exit_status = WEXITSTATUS(status);
-			}
 		}
 		free(command_path);
 	}
