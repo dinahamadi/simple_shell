@@ -11,6 +11,8 @@ char **divide(char *line, int *argc)
 	int compt = 0;
 
 	result = strtok(line, " \n\t");
+	if (result == NULL)
+		return (NULL);
 	while (result != NULL)
 	{
 		element = realloc(element, sizeof(char *) * (compt + 2));

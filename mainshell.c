@@ -12,7 +12,6 @@ int main(int argc, char **argv)
 	char *line = NULL;
 	ssize_t letters_read = 0;
 
-	(void)argv;
 	if (isatty(STDIN_FILENO))
 		mode_inter = 1;
 	while (1)
@@ -24,15 +23,18 @@ int main(int argc, char **argv)
 		if (letters_read != -1)
 		{
 			argv = divide(line, &argc);
-			if (argc != 0)
-				execute(argv, compt);
-			compt = 0;
-			while (argv[compt] != NULL)
+			if (argv != NULL)
 			{
-				free(argv[compt]);
-				compt++;
+				if (argc != 0)
+					execute(argv, compt);
+				compt = 0;
+				while (argv[compt] != NULL)
+				{
+					free(argv[compt]);
+					compt++;
+				}
+				free(argv);
 			}
-			free(argv);
 		}
 		else
 		{
