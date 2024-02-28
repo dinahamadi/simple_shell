@@ -66,8 +66,12 @@ int execute(char **argv, int compt)
 	}
 	return (exit_status);
 }
+/**
+ *find_path - find the command path
+ * @str: the command line
+ * Return: path for the command if found
+ */
 char *find_path(char *str)
 {
-	
 	return (str);
 }
