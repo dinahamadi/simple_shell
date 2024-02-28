@@ -18,7 +18,7 @@ char **divide(char *line, int *argc)
 		if (strcmp(result, "exit") == 0)
 		{
 			free(line);
-			exit(1);
+			exit(0);
 		}
 		element = realloc(element, sizeof(char *) * (compt + 2));
 		if (element == NULL)
