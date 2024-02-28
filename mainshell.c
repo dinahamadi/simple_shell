@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 		letters_read = getline(&line, &length, stdin);
 		if (letters_read != -1)
 		{
-			argv = divide(line, &argc);
+			argv = divide(line, &argc, &exit_status);
 			if (argv != NULL)
 			{
 				if (argc != 0)

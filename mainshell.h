@@ -12,7 +12,7 @@ extern char **environ;
 #include <sys/wait.h>
 void reverse_str(char *str);
 char *int_to_str(int n, char *str);
-char **divide(char *line, int *argc);
+char **divide(char *line, int *argc, size_t *exit_status);
 int execute(char **argv, int compt);
 char *find_path(char *str);
 #endif

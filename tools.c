@@ -5,7 +5,7 @@
  * @argc: number of arguments
  * Return: an array of elements
  */
-char **divide(char *line, int *argc)
+char **divide(char *line, int *argc, size_t *exit_status)
 {
 	char **element = NULL, *result;
 	int compt = 0;
@@ -18,7 +18,7 @@ char **divide(char *line, int *argc)
 		if (strcmp(result, "exit") == 0)
 		{
 			free(line);
-			exit(0);
+			exit(*exit_status);
 		}
 		element = realloc(element, sizeof(char *) * (compt + 2));
 		if (element == NULL)
