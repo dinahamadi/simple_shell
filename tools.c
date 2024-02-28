@@ -58,7 +58,7 @@ int execute(char **argv, int compt)
 		write(2, ": ", 2);
 		write(2, argv[0], strlen(argv[0]));
 		write(2, ": not found\n", strlen(" : not found\n"));
-		return (127);
+		exit(127);
 	}
 	else
 	{
