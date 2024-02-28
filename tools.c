@@ -66,7 +66,7 @@ int execute(char **argv, int compt)
 		if (sub_p < 0)
 		{
 			free(command_path);
-			exit (-1);
+			exit (127);
 		}
 		else if (sub_p == 0)
 		{
