@@ -13,6 +13,9 @@ char **divide(char *line, int *argc)
 	result = strtok(line, " \n\t");
 	while (result != NULL)
 	{
+		element = realloc(element, sizeof(char *) * (compt + 1));
+		if (element == NULL)
+			return (NULL);
 		element[compt] = strdup(result);
 		compt++;
 		result = strtok(NULL, " \n\t");
@@ -73,5 +76,28 @@ int execute(char **argv, int compt)
  */
 char *find_path(char *str)
 {
-	return (str);
+	char *existing_path, *sub_path, *cmd_path;
+	int length, sub_length;
+
+	if (access(str, X_OK) == 0)
+		return (strdup(str));
+	existing_path = getenv("PATH");
+	if (existing_path == NULL)
+		return (NULL);
+	length = strlen(str);
+	sub_path = strtok(existing_path, ":");
+	while (sub_path != NULL)
+	{
+		sub_length = strlen(sub_path);
+		cmd_path = malloc(sub_length + length + 2);
+		if (cmd_path == NULL)
+			return (NULL);
+		strcpy(cmd_path, sub_path);
+		strcat(cmd_path, "/");
+		strcat(cmd_path, str);
+		if (access(cmd_path, X_OK) == 0)
+			return (cmd_path);
+		sub_path = strtok(NULL, ":");
+	}
+	return (NULL);
 }
