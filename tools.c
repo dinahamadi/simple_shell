@@ -80,8 +80,16 @@ char *find_path(char *str)
 	int length, sub_length;
 
 	if (access(str, X_OK) == 0)
-		return (strdup(str));
+	{
+		cmd_path = strdup(str);
+		if (cmd_path == NULL)
+			return (NULL);
+		return (cmd_path);
+	}
 	existing_path = getenv("PATH");
+	if (existing_path == NULL)
+		return (NULL);
+	existing_path = strdup(existing_path);
 	if (existing_path == NULL)
 		return (NULL);
 	length = strlen(str);
@@ -91,13 +99,22 @@ char *find_path(char *str)
 		sub_length = strlen(sub_path);
 		cmd_path = malloc(sub_length + length + 2);
 		if (cmd_path == NULL)
+		{
+			free(existing_path);
 			return (NULL);
-		strcpy(cmd_path, sub_path);
-		strcat(cmd_path, "/");
-		strcat(cmd_path, str);
+		}
+		strncpy(cmd_path, sub_path, sub_length + 1);
+		strncat(cmd_path, "/", 2);
+		strncat(cmd_path, str, length + 1);
 		if (access(cmd_path, X_OK) == 0)
+		{
+			free(existing_path);
 			return (cmd_path);
+		}
+		free(cmd_path);
 		sub_path = strtok(NULL, ":");
 	}
+	free(existing_path);
 	return (NULL);
 }
+
