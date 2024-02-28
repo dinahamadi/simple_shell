@@ -84,6 +84,7 @@ int execute(char **argv, int compt)
 		}
 		free(command_path);
 	}
+	printf("exit status %i", exit_status);
 	return (exit_status);
 }
 /**

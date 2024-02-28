@@ -8,7 +8,7 @@
  */
 int main(int argc, char **argv)
 {
-	size_t mode_inter = 0, length = 0, compt = 0;
+	size_t mode_inter = 0, length = 0, compt = 0, exit_status = 0;
 	char *line = NULL;
 	ssize_t letters_read = 0;
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 			if (argv != NULL)
 			{
 				if (argc != 0)
-					execute(argv, compt);
+					exit_status = execute(argv, compt);
 				compt = 0;
 				while (argv[compt] != NULL)
 				{
@@ -41,9 +41,9 @@ int main(int argc, char **argv)
 			if (mode_inter == 1)
 				write(2, "\n", 2);
 			free(line);
-			return (0);
+			return (exit_status);
 		}
 	}
 	free(line);
-	return (0);
+	return (exit_status);
 }
