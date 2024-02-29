@@ -25,8 +25,7 @@ char **divide(char *line, int *argc, size_t *exit_status)
 		{
 			while (*environ != NULL)
 			{
-				write(2, *environ, strlen(*environ));
-				write(2, "\n", 1);
+				printf("% s\n", *environ);
 				environ++;
 			}
 			return (0);
