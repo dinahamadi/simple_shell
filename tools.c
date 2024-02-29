@@ -9,7 +9,7 @@
 char **divide(char *line, int *argc, size_t *exit_status)
 {
 	char **element = NULL, *result;
-	int compt = 0;
+	int compt = 0, i = 0;
 
 	result = strtok(line, " \n\t");
 	if (result == NULL)
@@ -20,6 +20,17 @@ char **divide(char *line, int *argc, size_t *exit_status)
 		{
 			free(line);
 			exit(*exit_status);
+		}
+		if (strcmp(result, "env") == 0)
+		{
+			i = 0;
+			while (environ[i] != NULL)
+			{
+				write(2, environ[i], strlen(environ[i]));
+				write(2, "\n", 1);
+				i++;
+			}
+			*exit_status = 0;
 		}
 		element = realloc(element, sizeof(char *) * (compt + 2));
 		if (element == NULL)
